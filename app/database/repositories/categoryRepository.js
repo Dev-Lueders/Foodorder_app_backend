@@ -1,6 +1,10 @@
 const CategoryModel = require("../../models/categoryModel");
 
-const createCategory = async (name, description, image) => {
+const createCategory = async (
+  name,
+  description,
+  image
+) => {
   try {
     const newCategory = await CategoryModel.create({
       name: name,
@@ -16,8 +20,12 @@ const createCategory = async (name, description, image) => {
 const editCategory = async (categoryId, newData) => {
   try {
     const categoryObject = await CategoryModel.findOne({
-      _id: categoryId,
       isActive: true,
+      $or: [
+        { id: categoryId },
+        {id: categoryId}
+      ]
+      
     });
 
     if (!categoryObject) {
@@ -54,7 +62,7 @@ const deleteCategory = async (categoryId) => {
 const getCategory = async (categoryId) => {
   try {
     const categoryObject = await CategoryModel.findOne({
-      _id: categoryId,
+      id: categoryId,
       isActive: true,
     });
     
@@ -79,7 +87,7 @@ const getCategoryIdByName = async (categoryName) => {
       name: categoryName,
       isActive: true,
     });
-    return categoryObject._id;
+    return categoryObject.id;
   } catch (err) {
     throw new Error(`Error while fetching category: ${err.message}`);
   }

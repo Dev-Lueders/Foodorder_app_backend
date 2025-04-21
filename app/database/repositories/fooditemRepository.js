@@ -1,38 +1,34 @@
+// const mongoose = require('mongoose'); ADDED LINE to utilize mongo
+
 const FooditemModel = require("../../models/fooditemModel");
 
-const createFooditem = async (id, name, description, image, categoryId, cuisineId, isVeg) => {
+const createFooditem = async (name, description, image, categoryId, cuisineId, isVeg) => {
   try {
     const newFooditem = await FooditemModel.create({
-      id: id,
       name: name,
       description: description,
       image: image,
       categoryId: categoryId,
       cuisineId: cuisineId,
-      isVeg: isVeg,
-      isActive: true,
-      createdTs: new Date(),
-      updatedTs: new Date()
+      isVeg: isVeg
     });
-    console.log('New Food Item', newFooditem);
     return newFooditem;
   } catch (err) {
     throw new Error(`Error while creating fooditem: ${err.message}`);
   }
 };
 
-
 const editFooditem = async (fooditemId, newData) => {
   try {
     const fooditemObject = await FooditemModel.findOne({
-      _id: fooditemId,
+      id: fooditemId,
       isActive: true,
     });
 
     if (!fooditemObject) {
       return null;
     }
-    fooditemObject.id = newData.id;
+
     fooditemObject.name = newData.name;
     fooditemObject.description = newData.description;
     fooditemObject.image = newData.image;
@@ -49,7 +45,7 @@ const editFooditem = async (fooditemId, newData) => {
 
 const deleteFooditem = async (fooditemId) => {
   try {
-    const fooditemObject = await FooditemModel.findById(fooditemId);
+    const fooditemObject = await FooditemModel.findByOne(fooditemId);
 
     if (!fooditemObject) {
       return null;
@@ -63,19 +59,12 @@ const deleteFooditem = async (fooditemId) => {
   }
 };
 
-
-const getFooditem = async(fooditemId) => {
- 
+const getFooditem = async (fooditemId) => {
   try {
-   
-    const fooditemObject = await FooditemModel.findOne({
-     isActive: true,
-      $or: [
-        { _id: fooditemId, isActive: true },
-        { id: fooditemId, isActive: true }
-      ]
-    })
-  
+    
+    const fooditemObject = await FooditemModel.findbyOne(fooditemId)
+    
+    return fooditemObject;
   } catch (err) {
     throw new Error(`Error while fetching fooditem: ${err.message}`);
   }

@@ -19,7 +19,7 @@ const createUser = async (userData) => {
 
 const findUserById = async (id) => {
   try {
-    return await UserModel.findOne({ _id: id, isActive: true });
+    return await UserModel.findOne({ id: id, isActive: true });
   } catch (err) {
     throw new Error(`Error while finding user by ID: ${err.message}`);
   }

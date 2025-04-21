@@ -3,7 +3,7 @@ const expressAsyncHandler = require("express-async-handler");
 
 const createOrder = expressAsyncHandler(async (req, res) => {
   try {
-    const result = await orderRepository.createOrder(req.user._id, req.body);
+    const result = await orderRepository.createOrder(req.user.id, req.body);
 
     if (result) {
       res.status(200).json({

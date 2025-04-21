@@ -2,11 +2,11 @@ const mongoose = require("mongoose");
 
 const FooditemSchema = mongoose.Schema({
   orderId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     required: true,
   },
   fooditemId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     required: true,
   },
   price: {
@@ -33,7 +33,7 @@ const FooditemSchema = mongoose.Schema({
 
 const ShippingDetailsSchema = mongoose.Schema({
   id: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: string,
   },
   address: {
     type: String,
@@ -65,15 +65,15 @@ const ShippingDetailsSchema = mongoose.Schema({
 
 const orderSchema = mongoose.Schema({
   id: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: string,
     requires: true,  
   },
   userId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: string,
     required: true,
   },
   restaurantId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: string,
     required: true,
   },
    orderTotalPrice: {

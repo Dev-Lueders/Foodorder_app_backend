@@ -60,13 +60,13 @@ const login = expressAsyncHandler(async (req, res) => {
     }
 
     let userSessionObject = await userRepository.findActiveUserSession(
-      user._id
+      user.id
     );
 
     if (!userSessionObject) {
-      const sessionToken = generatingSessionToken(user._id);
+      const sessionToken = generatingSessionToken(user.id);
       userSessionObject = await userRepository.createUserSession({
-        userId: user._id,
+        userId: user.id,
         sessionToken: sessionToken,
       });
     }
@@ -74,7 +74,7 @@ const login = expressAsyncHandler(async (req, res) => {
     res.status(200).json({
       message: "User logged in successfully",
       data: {
-        _id: user._id,
+        id: user.id,
         username: user.username,
         fullname: user.fullname,
         email: user.email,
@@ -96,7 +96,7 @@ const userDetails = expressAsyncHandler(async (req, res) => {
     const userObject = await userRepository.findUserById(req.params.id);
     if (userObject) {
       res.status(200).json({
-        _id: userObject._id,
+        id: userObject.id,
         username: userObject.username,
         fullname: userObject.fullname,
         email: userObject.email,
@@ -118,7 +118,7 @@ const userDetails = expressAsyncHandler(async (req, res) => {
 const logout = expressAsyncHandler(async (req, res) => {
   try {
     const userSessionObject = await userRepository.findActiveUserSession(
-      req.user._id,
+      req.user.id,
       req.headers.authorization.split(" ")[1]
     );
 
@@ -153,7 +153,7 @@ const editUser = expressAsyncHandler(async (req, res) => {
       userObject.password = req.body.password || userObject.password;
 
       const updatedUser = await userRepository.updateUser(
-        userObject._id,
+        userObject.id,
         userObject
       );
       if (!updatedUser) throw new Error("Unable to update the user details");
@@ -180,12 +180,12 @@ const deleteUserHandler = expressAsyncHandler(async (req, res) => {
     if (userObject) {
       userObject.isActive = false;
       const userSessionObject = await userRepository.findActiveUserSession(
-        userObject._id
+        userObject.id
       );
       if (userSessionObject) {
         await userRepository.deactivateUserSession(userSessionObject);
       }
-      await userRepository.updateUser(userObject._id, userObject);
+      await userRepository.updateUser(userObject.id, userObject);
 
       res.status(200).json({
         message: "User deleted successfully",

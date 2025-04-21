@@ -2,28 +2,25 @@ const fooditemRepository = require("../database/repositories/fooditemRepository"
 const expressAsyncHandler = require("express-async-handler");
 
 const createFooditem = expressAsyncHandler(async (req, res) => {
-  console.log("DEBUG req.body", req.body);
   /* COMPLETE TASK 1.a HERE */
   try {
-    const { id, name, description, image, categoryId, cuisineId, isVeg } = req.body;
-    const result = await fooditemRepository.createFooditem
-      (id, name, description, image, categoryId, cuisineId, isVeg);
-    
+    const { name, description, image } = req.body;
+    const result = await fooditemRepository.createFooditem(name, description, image);
+
     if (result) {
       res.status(201).json({
-        message: "Food item created successfully",
-
+        message: "Food Item created was a success",
       });
     } else {
       res.status(400);
-      throw new Error('Food Item creation failed');
+      throw new Error(`Food Item creation failed`);
     }
   } catch (err) {
     console.error(err);
-    res.status(500).json ({
-      message: "Error creating category",
-      error:err.message,
-    })
+    res.status(500).json({
+      message: "Error creating Food Item",
+      error: err.message,
+    });
   }
 });
 
@@ -31,20 +28,21 @@ const editFooditem = expressAsyncHandler(async (req, res) => {
   /* COMPLETE TASK 1.b HERE */
   try {
     const fooditemId = req.params.id;
-    const result = await fooditemRepository.editFooditem(fooditemId, req.body);
+    const result = await fooditemRepository.editfooditems(fooditemId, req.body);
 
     if (result) {
       res.status(200).json({
-        message: "Food Item has been edited successfully",
+        message: "Food Item successfully edited",
       });
     } else {
       res.status(400);
-      throw new Error('Food Item edit failed');
+      throw new Error(`Failed to edit Food Item`);
     }
   } catch (err) {
     console.error(err);
     res.status(500).json({
-      message: "Error deleting Food Item",
+      message: "Failed to edit Food Item details",
+      error: err.message,
     });
   }
 });
@@ -57,47 +55,45 @@ const deleteFooditem = expressAsyncHandler(async (req, res) => {
 
     if (result) {
       res.status(200).json({
-        message: "Food Item was deleted successfully",
-      })
+        message: " Successfully deleted Food Item",
+      });
     } else {
       res.status(400);
-      throw new Error('Food Item failed to delete');
+      throw new Error(`Failed to delete Food Item`);
     }
   } catch (err) {
     console.error(err);
     res.status(500).json({
-      message: " Could not delete Food Item",
+      message: "Error deleting Food Item",
       error: err.message,
-    })
-    }
+    });
+  }
 });
 
 const getFooditem = expressAsyncHandler(async (req, res) => {
   /* COMPLETE TASK 1.d HERE */
-  console.log("attempting to get fooditem with id:", req.params.id)
   try {
     const fooditemId = req.params.id;
     const result = await fooditemRepository.getFooditem(fooditemId);
-  
-  
-  if (result) {
-    res.status(200).json({
-      data: result,
-      message: "Retrieved Food Item details successfully",
+
+    if (result) {
+      res.status(200).json({
+        data: result,
+        message: "Fetched Food Items Successfully",
+      });
+    } else {
+      res.status(204);
+      throw new Error(
+        `Not able to find the food Item based on the food Item id: ${fooditemId}`
+      );
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      message: "Error Fetching Food Item Details",
+      error: err.message,
     });
-  } else {
-    res.status(404);
-    throw new Error(`No item Found based on the fooditemId 
-    ${fooditemId}`
-    );
   }
-} catch (err) {
-  console.error(err);
-  res.status(500).json({
-    message: "Error fetching Food Item",
-    error: err.message,
-  });
-}
 });
 
 const getAllFooditems = expressAsyncHandler(async (req, res) => {
@@ -106,15 +102,15 @@ const getAllFooditems = expressAsyncHandler(async (req, res) => {
     const result = await fooditemRepository.getAllFooditems();
     res.status(200).json({
       data: result,
-      message: "Success received all food items",
+      message: "Fetched all Food Items Successfully",
     });
   } catch (err) {
     console.error(err);
     res.status(500).json({
-      message: "Error fetching food items",
+      message: "Error fetching Food Items",
       error: err.message,
     });
-}
+  }
 });
 
 module.exports = {

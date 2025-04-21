@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 
 const menuSchema = mongoose.Schema({
     id: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
     },
     restaurantId: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         required: true,
     },
     description: {

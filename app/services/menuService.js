@@ -13,7 +13,7 @@ const createMenu = expressAsyncHandler(async (req, res) => {
     if (savedMenu) {
       // Create an array to store the menu items to be inserted.
       const menuItemsArray = Object.entries(menuForRestaurant).map(([fooditemId, fooditemName, fooditemImage, fooditemPrice]) => ({
-        menuId: savedMenu._id, // Associate the menu item with the newly created menu.
+        menuId: savedMenu.id, // Associate the menu item with the newly created menu.
         fooditemId,
         fooditemName,
         fooditemImage,
@@ -27,13 +27,13 @@ const createMenu = expressAsyncHandler(async (req, res) => {
             message: "Menu created successfully",
           });
         } else {
-          const result = await menuRepository.deleteMenu(savedMenu._id);
+          const result = await menuRepository.deleteMenu(savedMenu.id);
           res.status(400);
           throw new Error(`Menuitem creation failed`);
         }
       }
       catch (err) {
-        const result = await menuRepository.deleteMenu(savedMenu._id);
+        const result = await menuRepository.deleteMenu(savedMenu.id);
         res.status(400);
         throw new Error(`Menu creation failed`);
       }
@@ -120,9 +120,9 @@ const getMenuByRestaurant = expressAsyncHandler(async (req, res) => {
 
     if (result) {
       try {
-        const menuItems = await menuitemRepository.getAllMenuitemsByMenuId(result._id);
-        const extractedItems = menuItems.map(({ _id, fooditemId, fooditemName, fooditemImage, fooditemPrice }) => ({
-          _id,
+        const menuItems = await menuitemRepository.getAllMenuitemsByMenuId(result.id);
+        const extractedItems = menuItems.map(({ id, fooditemId, fooditemName, fooditemImage, fooditemPrice }) => ({
+          id,
           fooditemId,
           fooditemName,
           fooditemImage,
@@ -188,7 +188,7 @@ const getMenuByRestaurant = expressAsyncHandler(async (req, res) => {
         }
         res.status(200).json({
           data: {
-            _id: result._id,
+            id: result.id,
             restaurantId: result.restaurantId,
             menu: extractedItems
           },

@@ -3,10 +3,10 @@ const { default: UserModel } = require('./userModel');
 
 const userSessionSchema = mongoose.Schema({
     id: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
     },
     userId: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         required: true,
     },
     sessionToken: {

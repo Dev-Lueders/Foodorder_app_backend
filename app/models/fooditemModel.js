@@ -2,7 +2,9 @@ const mongoose = require('mongoose');
 
 const fooditemSchema = mongoose.Schema({
      id: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
+        required: true,
+         unique: true,
 
     },
     name: {
@@ -18,11 +20,11 @@ const fooditemSchema = mongoose.Schema({
         required: true,
     },
     categoryId: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: string,
         required: true,
     },
     cuisineId: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: string,
         required: true,
     },
     isVeg: {

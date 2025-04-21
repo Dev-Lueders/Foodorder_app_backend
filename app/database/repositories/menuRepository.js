@@ -15,7 +15,7 @@ const createMenu = async (restaurantId, description) => {
 const editMenu = async (menuId, description) => {
   try {
     const menuObject = await MenuModel.findOne({
-      id: menuId,
+      _id: menuId,
       isActive: true,
     });
 
@@ -34,7 +34,7 @@ const editMenu = async (menuId, description) => {
 
 const deleteMenu = async (menuId) => {
   try {
-    const menuObject = await MenuModel.deleteOne({id:menuId});
+    const menuObject = await MenuModel.deleteOne({_id:menuId});
     return menuObject
   } catch (err) {
     throw new Error(`Error while deleting menu: ${err.message}`);
@@ -44,7 +44,7 @@ const deleteMenu = async (menuId) => {
 const getMenuById = async (id) => {
   try {
     const menuObject = await MenuModel.findOne({
-      id: id,
+      _id: id,
       isActive: true,
     });
     return menuObject;
@@ -56,7 +56,7 @@ const getMenuById = async (id) => {
 const getMenusByIds = async (idsArray) => {
   try {
     const menuObjects = await MenuModel.find({
-      id: { $in : idsArray},
+      _id: { $in : idsArray},
       isActive: true,
     });
     return menuObjects;

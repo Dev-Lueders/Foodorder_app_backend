@@ -12,9 +12,9 @@ const createMenuitems = async (menuItemsToInsert) => {
 
 const editMenuitems = async (menuitemsToEdit) => {
   // Create an array of update operations
-  const updateOperations = menuitemsToEdit.map(({ id, fooditemPrice }) => ({
+  const updateOperations = menuitemsToEdit.map(({_id, fooditemPrice }) => ({
     updateOne: {
-      filter: { id }, // Match documents by id
+      filter: { _id }, // Match documents by id 
       update: {
         $set: {
           fooditemPrice,

@@ -32,7 +32,7 @@ const orderHistoryOfUser = async (userId) => {
 const getOrderDetail = async (userId, orderId) => {
   try {
     const ordersOfUser = await OrderModel.find({
-      id: orderId,
+      _id: orderId,
       userId: userId,
       isActive: true,
     });
@@ -56,7 +56,7 @@ const orderHistoryOfAllUsers = async () => {
 const changeOrderStatus = async (orderId, newStatus) => {
   try {
     const orderDetails = await OrderModel.findOne({
-      id: orderId,
+      _id: orderId,
       isActive: true,
     });
 

@@ -16,7 +16,7 @@ const createCuisine = async (name, description, image) => {
 const editCuisine = async (cuisineId, newData) => {
   try {
     const cuisineObject = await CuisineModel.findOne({
-      id: cuisineId,
+      _id: cuisineId,
       isActive: true,
     });
 
@@ -54,7 +54,7 @@ const deleteCuisine = async (cuisineId) => {
 const getCuisine = async (cuisineId) => {
   try {
     const cuisineObject = await CuisineModel.findOne({
-      id: cuisineId,
+      _id: cuisineId,
       isActive: true,
     });
     return cuisineObject;
@@ -79,7 +79,7 @@ const getCuisineIdByName = async (cuisineName) => {
       name: cuisineName,
       isActive: true,
     });
-    return cuisineObject.id;
+    return cuisineObject._id;
   } catch (err) {
     throw new Error(`Error while fetching cuisine: ${err.message}`);
   }

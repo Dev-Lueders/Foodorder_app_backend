@@ -21,8 +21,8 @@ const createFooditem = async (name, description, image, categoryId, cuisineId, i
 const editFooditem = async (fooditemId, newData) => {
   try {
     const fooditemObject = await FooditemModel.findOne({
-      id: fooditemId,
-      isActive: true,
+      _id: fooditemId,
+      isActive:true
     });
 
     if (!fooditemObject) {
@@ -45,7 +45,7 @@ const editFooditem = async (fooditemId, newData) => {
 
 const deleteFooditem = async (fooditemId) => {
   try {
-    const fooditemObject = await FooditemModel.findByOne(fooditemId);
+    const fooditemObject = await FooditemModel.findById(fooditemId);
 
     if (!fooditemObject) {
       return null;
@@ -62,7 +62,11 @@ const deleteFooditem = async (fooditemId) => {
 const getFooditem = async (fooditemId) => {
   try {
     
-    const fooditemObject = await FooditemModel.findbyOne(fooditemId)
+    const fooditemObject = await FooditemModel.findOne(
+      {
+        _id: fooditemId,
+        isActive: true
+      })
     
     return fooditemObject;
   } catch (err) {

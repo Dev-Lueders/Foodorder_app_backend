@@ -3,9 +3,9 @@ const mongoose = require('mongoose')
 const userSchema = mongoose.Schema(
     
     {
-        id: {
-        type: String,
-        },
+        // id: {
+        // type: String,
+        // },
         username: {
             type: String,
             required: true,
@@ -18,13 +18,15 @@ const userSchema = mongoose.Schema(
             type: String,
             required: true,
         },
-        phoneNo: {
-            type: String,
-        },
+      
         password: {
             type: String,
             required: true,
         },
+//   phoneNo: {
+//             type: String,
+//         },
+
         isAdmin: {
             type: Boolean,
             required: true,

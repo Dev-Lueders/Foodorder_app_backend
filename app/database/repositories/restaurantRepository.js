@@ -17,7 +17,7 @@ const createRestaurant = async (name, address, contact, image) => {
 const editRestaurant = async (restaurantId, newData) => {
   try {
     const restaurantObject = await RestaurantModel.findOne({
-      id: restaurantId,
+      _id: restaurantId,
       isActive: true,
     });
 
@@ -56,7 +56,7 @@ const deleteRestaurant = async (restaurantId) => {
 const getRestaurant = async (restaurantId) => {
   try {
     const restaurantObject = await RestaurantModel.findOne({
-      id: restaurantId,
+      _id: restaurantId,
       isActive: true,
     });
     return restaurantObject;
@@ -77,7 +77,7 @@ const getAllRestaurants = async () => {
 const getRestaurantsByIds = async (restaurantIdsArray) => {
   try {
     const restaurantObjects = await RestaurantModel.find({
-      id: { $in : restaurantIdsArray },
+      _id: { $in : restaurantIdsArray },
       isActive: true,
     });
     return restaurantObjects;

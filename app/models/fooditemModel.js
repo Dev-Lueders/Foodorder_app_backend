@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
 const fooditemSchema = mongoose.Schema({
-     id: {
-        type: String,
-        required: true,
-         unique: true,
+    //  id: {
+    //     type: String,
+    //     required: true,
+    //      unique: true,
 
-    },
+    // },
     name: {
         type: String,
         required: true,
@@ -20,11 +20,11 @@ const fooditemSchema = mongoose.Schema({
         required: true,
     },
     categoryId: {
-        type: string,
+        type: String,
         required: true,
     },
     cuisineId: {
-        type: string,
+        type: String,
         required: true,
     },
     isVeg: {

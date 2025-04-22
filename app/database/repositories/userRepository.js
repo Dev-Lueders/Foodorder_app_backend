@@ -1,5 +1,12 @@
 const UserModel = require("../../models/userModel");
 const UserSessionModel = require("../../models/userSessionModel");
+const createUser = async (userData) => {
+  try {
+    return await UserModel.create(userData);
+  } catch (err) {
+    throw new Error(`Error while creating user: ${err.message}`);
+  }
+};
 
 const findUserByUsername = async (username) => {
   try {
@@ -9,13 +16,7 @@ const findUserByUsername = async (username) => {
   }
 };
 
-const createUser = async (userData) => {
-  try {
-    return await UserModel.create(userData);
-  } catch (err) {
-    throw new Error(`Error while creating user: ${err.message}`);
-  }
-};
+
 
 const findUserById = async (id) => {
   try {

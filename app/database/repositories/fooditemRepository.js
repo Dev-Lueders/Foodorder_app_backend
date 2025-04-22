@@ -1,4 +1,4 @@
-// const mongoose = require('mongoose'); ADDED LINE to utilize mongo
+ const mongoose = require('mongoose'); //ADDED LINE to utilize mongo
 
 const FooditemModel = require("../../models/fooditemModel");
 
@@ -20,28 +20,40 @@ const createFooditem = async (name, description, image, categoryId, cuisineId, i
 
 const editFooditem = async (fooditemId, newData) => {
   try {
-    const fooditemObject = await FooditemModel.findOne({
-      _id: fooditemId,
-      isActive:true
-    });
-
-    if (!fooditemObject) {
-      return null;
-    }
-
-    fooditemObject.name = newData.name;
-    fooditemObject.description = newData.description;
-    fooditemObject.image = newData.image;
-    fooditemObject.categoryId = newData.categoryId;
-    fooditemObject.cuisineId = newData.cuisineId;
-    fooditemObject.isVeg = newData.isVeg;
-
-    const updatedFooditem = await fooditemObject.save();
+    const updatedFooditem = await FooditemModel.findOneAndUpdate(
+      { _id: fooditemId, isActive: true },
+      { $set: newData },
+      { new: true }
+    );
     return updatedFooditem;
   } catch (err) {
     throw new Error(`Error while editing fooditem: ${err.message}`);
   }
-};
+}
+// const editFooditem = async (fooditemId, newData) => {
+//   try {
+//     const fooditemObject = await FooditemModel.findOne({
+//       _id: fooditemId,
+//       isActive:true
+//     });
+
+//     if (!fooditemObject) {
+//       return null;
+//     }
+//     if(newData.id !== undefined) fooditemObject.id = newData.id;
+//     if(newData.name !== undefined) fooditemObject.name = newData.name;
+//     if(newData.description !== undefined)fooditemObject.description = newData.description;
+//     if(newData.image !== undefined) fooditemObject.image = newData.image;
+//     if(newData.categoryId !== undefined) fooditemObject.categoryId = newData.categoryId;
+//     if(newData.cuisineId !== undefined) fooditemObject.cuisineId = newData.cuisineId;
+//     if(newData.isVeg !== undefined) fooditemObject.isVeg = newData.isVeg;
+
+//     const updatedFooditem = await fooditemObject.save();
+//     return updatedFooditem;
+//   } catch (err) {
+//     throw new Error(`Error while editing fooditem: ${err.message}`);
+//   }
+// };
 
 const deleteFooditem = async (fooditemId) => {
   try {
@@ -70,7 +82,7 @@ const getFooditem = async (fooditemId) => {
     
     return fooditemObject;
   } catch (err) {
-    throw new Error(`Error while fetching fooditem: ${err.message}`);
+    throw new Error(`Error while fetching Food Item: ${err.message}`);
   }
 };
 
@@ -79,7 +91,7 @@ const getAllFooditems = async () => {
     const fooditems = await FooditemModel.find({ isActive: true });
     return fooditems;
   } catch (err) {
-    throw new Error(`Error while fetching fooditems: ${err.message}`);
+    throw new Error(`Error while fetching Food Items: ${err.message}`);
   }
 };
 

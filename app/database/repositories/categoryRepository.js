@@ -21,12 +21,8 @@ const editCategory = async (categoryId, newData) => {
   try {
     const categoryObject = await CategoryModel.findOne({
       isActive: true,
-      $or: [
-        { id: categoryId },
-        {id: categoryId}
-      ]
-      
-    });
+        _id: categoryId 
+      });
 
     if (!categoryObject) {
       return null;
@@ -62,7 +58,7 @@ const deleteCategory = async (categoryId) => {
 const getCategory = async (categoryId) => {
   try {
     const categoryObject = await CategoryModel.findOne({
-      id: categoryId,
+      _id: categoryId,
       isActive: true,
     });
     

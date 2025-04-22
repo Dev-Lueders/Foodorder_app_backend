@@ -24,6 +24,7 @@ const createCategory = expressAsyncHandler(async (req, res) => {
 });
 
 const editCategory = expressAsyncHandler(async (req, res) => {
+ 
   try {
     const categoryId = req.params.id;
     const result = await categoryRepository.editCategory(categoryId, req.body);

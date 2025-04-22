@@ -28,7 +28,7 @@ const editFooditem = expressAsyncHandler(async (req, res) => {
   /* COMPLETE TASK 1.b HERE */
   try {
     const fooditemId = req.params.id;
-    const result = await fooditemRepository.editfooditems(fooditemId, req.body);
+    const result = await fooditemRepository.editFooditem(fooditemId, req.body);
 
     if (result) {
       res.status(200).json({

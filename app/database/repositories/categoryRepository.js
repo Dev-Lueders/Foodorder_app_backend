@@ -1,12 +1,14 @@
 const CategoryModel = require("../../models/categoryModel");
 
 const createCategory = async (
+  id,
   name,
   description,
   image
 ) => {
   try {
     const newCategory = await CategoryModel.create({
+      id: id,
       name: name,
       description: description,
       image: image
@@ -20,17 +22,17 @@ const createCategory = async (
 const editCategory = async (categoryId, newData) => {
   try {
     const categoryObject = await CategoryModel.findOne({
-      isActive: true,
         _id: categoryId 
       });
 
     if (!categoryObject) {
       return null;
     }
-
+    categoryObject.id = newData.id;
     categoryObject.name = newData.name;
     categoryObject.description = newData.description;
     categoryObject.image = newData.image;
+    categoryObject.isActive = newData.isActive;
 
     const updatedCategory = await categoryObject.save();
     return updatedCategory;
@@ -58,8 +60,8 @@ const deleteCategory = async (categoryId) => {
 const getCategory = async (categoryId) => {
   try {
     const categoryObject = await CategoryModel.findOne({
-      _id: categoryId,
-      isActive: true,
+      _id: categoryId
+      
     });
     
     return categoryObject;

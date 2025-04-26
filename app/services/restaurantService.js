@@ -8,8 +8,8 @@ const menuRepository = require("../database/repositories/menuRepository");
 
 const createRestaurant = expressAsyncHandler(async (req, res) => {
   try {
-    const { name, address, contact, image } = req.body;
-    const result = await restaurantRepository.createRestaurant(name, address, contact, image);
+    const { id, name, address, contact, image, cuisineId, categoryId } = req.body;
+    const result = await restaurantRepository.createRestaurant(id,name, address, contact, image, cuisineId, categoryId);
 
     if (result) {
       res.status(201).json({
@@ -22,7 +22,7 @@ const createRestaurant = expressAsyncHandler(async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({
-      message: "Error creating restaurant",
+      message: "Error creating restaurant in the catch",
       error: err.message,
     });
   }
@@ -80,7 +80,7 @@ const getRestaurant = expressAsyncHandler(async (req, res) => {
     if (result) {
       res.status(200).json({
         data: result,
-        message: "Sucessfully fetched restaurant details.",
+        message: "Successfully fetched restaurant details.",
       });
     } else {
       res.status(204);
@@ -157,7 +157,7 @@ const getAllRestaurants = expressAsyncHandler(async (req, res) => {
     if (result) {
       res.status(200).json({
         data: result,
-        message: "Sucessfully fetched restaurants details.",
+        message: "Successfully fetched restaurants details.",
       });
     } else {
       console.log(result);

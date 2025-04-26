@@ -70,11 +70,12 @@ const orderSchema = mongoose.Schema({
   //   requires: true,  
   // },
   userId: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref:"users",
     required: true,
   },
   restaurantId: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
   },
   status: {
@@ -92,7 +93,8 @@ const orderSchema = mongoose.Schema({
   },
    
     shippingDetails: {
-    type: Object,
+      type: mongoose.Types.ObjectId,
+      ref:"shippingdetails",
     required: true
   },
   

@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 
 const restaurantSchema = mongoose.Schema({
-    // id: {
-    //     type: String,
-
-    // },
+    id: {
+        type: String,
+        required: true,
+        unique: true,
+    },
     name: {
         type: String,
         required: true,
@@ -25,13 +26,19 @@ const restaurantSchema = mongoose.Schema({
         type: Boolean,
         default: true,
     },
+    categoryId: {
+      type: String,  
+    },
+    cuisineId: {
+        type:String,
+    },
     createdTs: {
         type: Date,
-        default: new Date(),
+        default:Date.now,
     },
     updatedTs: {
         type: Date,
-        default: new Date(),
+        default:Date.now,
     }
 });
 

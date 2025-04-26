@@ -1,10 +1,12 @@
 const mongoose = require('mongoose');
 
 const cuisineSchema = mongoose.Schema({
-    //  id: {
-    //     type: String,
+     id: {
+        type: String,
+        required: true,
+         unique: true,
 
-    // },
+    },
     name: {
         type: String,
         required: true,

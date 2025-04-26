@@ -20,4 +20,4 @@ userRouter.route("/:id").delete(auth, isAdmin, deleteUser);
 userRouter.route("/:id").put(auth, editUser);
 userRouter.route("/").get(auth, isAdmin, getAllUsers);
 
-module.exports = userRouter
+module.exports = userRouter;

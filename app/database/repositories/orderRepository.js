@@ -35,6 +35,7 @@ const getOrderDetail = async (userId, orderId) => {
       _id: orderId,
       userId: userId,
       isActive: true,
+      
     });
     return ordersOfUser;
   } catch (err) {
@@ -65,6 +66,7 @@ const changeOrderStatus = async (orderId, newStatus) => {
     }
 
     orderDetails.status = newStatus;
+    
     await orderDetails.save();
     return true;
   } catch (err) {

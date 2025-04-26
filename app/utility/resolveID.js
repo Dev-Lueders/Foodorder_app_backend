@@ -1,14 +1,15 @@
 const mongoose = require("mongoose");
 
-// Map of known ID fields to their models
+
 const modelMap = {
-  categoryId: require("../models/Category"),
-  cuisineId: require("../models/Cuisine"),
-  restaurantId: require("../models/Restaurant"),
-  menuId: require("../models/Menu"),
-    userId: require("../models/User"),
-  fooditemId: require("../models/Fooditem"),
-  menuitemId: require("../models/Menuitem"),
+  categoryId: require("../models/categoryModel"),
+  cuisineId: require("../models/cuisineModel"),
+  restaurantId: require("../models/restaurantModel"),                      // Map of known ID fields to their models
+  menuId: require("../models/menuModel"),
+    userId: require("../models/userModel"),
+  fooditemId: require("../models/fooditemModel"),
+  menuitemId: require("../models/menuitemModel"),
+
   
 };
 

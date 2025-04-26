@@ -1,8 +1,9 @@
 const CuisineModel = require("../../models/cuisineModel");
 
-const createCuisine = async (name, description, image) => {
+const createCuisine = async (id,name, description, image) => {
   try {
     const newCuisine = await CuisineModel.create({
+      id: id,
       name: name,
       description: description,
       image: image
@@ -17,16 +18,17 @@ const editCuisine = async (cuisineId, newData) => {
   try {
     const cuisineObject = await CuisineModel.findOne({
       _id: cuisineId,
-      isActive: true,
+     
     });
 
     if (!cuisineObject) {
       return null;
     }
-
+    cuisineObject.id = newData.id;
     cuisineObject.name = newData.name;
     cuisineObject.description = newData.description;
     cuisineObject.image = newData.image;
+    cuisineObject.isActive = newData.isActive;
 
     const updatedCuisine = await cuisineObject.save();
     return updatedCuisine;

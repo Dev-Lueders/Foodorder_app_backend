@@ -156,14 +156,14 @@ const editUser = expressAsyncHandler(async (req, res) => {
         userObject.id,
         userObject
       );
-      if (!updatedUser) throw new Error("Unable to update the user details");
+      if (!updatedUser) throw new Error("Unable to update the user details new Error");
 
       res.status(200).json({
         message: "Details are successfully updated.",
       });
     } else {
       res.status(400);
-      throw new Error("Unable to update the user details");
+      throw new Error("Unable to update the user details stat 400");
     }
   } catch (err) {
     console.error(err);

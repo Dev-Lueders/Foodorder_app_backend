@@ -1,16 +1,18 @@
- const mongoose = require('mongoose'); //ADDED LINE to utilize mongo
+ const mongoose = require('mongoose'); 
 
 const FooditemModel = require("../../models/fooditemModel");
 
-const createFooditem = async (name, description, image, categoryId, cuisineId, isVeg) => {
+const createFooditem = async (id, name, description, image, categoryId, cuisineId, isVeg) => {
   try {
     const newFooditem = await FooditemModel.create({
+      id: id,
       name: name,
       description: description,
       image: image,
       categoryId: categoryId,
       cuisineId: cuisineId,
-      isVeg: isVeg
+      isVeg: isVeg,
+      isActive: isActive
     });
     return newFooditem;
   } catch (err) {
@@ -18,42 +20,36 @@ const createFooditem = async (name, description, image, categoryId, cuisineId, i
   }
 };
 
+
 const editFooditem = async (fooditemId, newData) => {
   try {
-    const updatedFooditem = await FooditemModel.findOneAndUpdate(
-      { _id: fooditemId, isActive: true },
-      { $set: newData },
-      { new: true }
-    );
+    const query = {
+      _id: new mongoose.Types.ObjectId(fooditemId),
+      
+    };
+
+    const fooditemObject = await FooditemModel.findOne(query);
+    
+    if (!fooditemObject) {
+      return null;
+    }
+    fooditemObject.id = newData.id;
+    fooditemObject.isActive = newData.isActive;
+     fooditemObject.name = newData.name;
+    fooditemObject.description = newData.description;
+     fooditemObject.image = newData.image;
+     fooditemObject.categoryId = newData.categoryId;
+     fooditemObject.cuisineId = newData.cuisineId;
+    fooditemObject.isVeg = newData.isVeg;
+    fooditemObject.updatedTs = new Date();
+    
+
+    const updatedFooditem = await fooditemObject.save();
     return updatedFooditem;
   } catch (err) {
     throw new Error(`Error while editing fooditem: ${err.message}`);
   }
-}
-// const editFooditem = async (fooditemId, newData) => {
-//   try {
-//     const fooditemObject = await FooditemModel.findOne({
-//       _id: fooditemId,
-//       isActive:true
-//     });
-
-//     if (!fooditemObject) {
-//       return null;
-//     }
-//     if(newData.id !== undefined) fooditemObject.id = newData.id;
-//     if(newData.name !== undefined) fooditemObject.name = newData.name;
-//     if(newData.description !== undefined)fooditemObject.description = newData.description;
-//     if(newData.image !== undefined) fooditemObject.image = newData.image;
-//     if(newData.categoryId !== undefined) fooditemObject.categoryId = newData.categoryId;
-//     if(newData.cuisineId !== undefined) fooditemObject.cuisineId = newData.cuisineId;
-//     if(newData.isVeg !== undefined) fooditemObject.isVeg = newData.isVeg;
-
-//     const updatedFooditem = await fooditemObject.save();
-//     return updatedFooditem;
-//   } catch (err) {
-//     throw new Error(`Error while editing fooditem: ${err.message}`);
-//   }
-// };
+};
 
 const deleteFooditem = async (fooditemId) => {
   try {

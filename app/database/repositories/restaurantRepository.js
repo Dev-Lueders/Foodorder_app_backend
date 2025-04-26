@@ -1,12 +1,15 @@
 const RestaurantModel = require("../../models/restaurantModel");
 
-const createRestaurant = async (name, address, contact, image) => {
+const createRestaurant = async (id, name, address, contact, image,categoryId,cuisineId) => {
   try {
     const newRestaurant = await RestaurantModel.create({
+      id: id,
       name: name,
       address: address,
       contact: contact,
-      image: image
+      image: image,
+      categoryId: categoryId,
+      cuisineId: cuisineId,
     });
     return newRestaurant;
   } catch (err) {
@@ -18,17 +21,20 @@ const editRestaurant = async (restaurantId, newData) => {
   try {
     const restaurantObject = await RestaurantModel.findOne({
       _id: restaurantId,
-      isActive: true,
+      
     });
 
     if (!restaurantObject) {
       return null;
     }
-
+    restaurantObject.id = newData.id;
     restaurantObject.name = newData.name;
     restaurantObject.address = newData.address;
     restaurantObject.contact = newData.contact;
     restaurantObject.image = newData.image;
+    restaurantObject.isActive = newData.isActive;
+    restaurantObject.cuisineId = newData.cuisineId;
+    restaurantObject.categoryId = newData.categoryId;
 
     const updatedRestaurant = await restaurantObject.save();
     return updatedRestaurant;
@@ -57,7 +63,7 @@ const getRestaurant = async (restaurantId) => {
   try {
     const restaurantObject = await RestaurantModel.findOne({
       _id: restaurantId,
-      isActive: true,
+      
     });
     return restaurantObject;
   } catch (err) {

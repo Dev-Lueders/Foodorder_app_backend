@@ -24,7 +24,7 @@ const editMenu = async (menuId, description) => {
     }
 
     menuObject.description = description;
-
+    menuObject.isActive = newData.isActive;
     const updatedMenu = await menuObject.save();
     return updatedMenu;
   } catch (err) {

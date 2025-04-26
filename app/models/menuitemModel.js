@@ -9,7 +9,7 @@ const menuitemSchema = mongoose.Schema({
         required: true,
     },
     fooditemId: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
         required: true,
     },
     fooditemName: {

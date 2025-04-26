@@ -3,8 +3,8 @@ const expressAsyncHandler = require("express-async-handler");
 
 const createCuisine = expressAsyncHandler(async (req, res) => {
   try {
-    const { name, description, image } = req.body;
-    const result = await cuisineRepository.createCuisine(name, description, image);
+    const { id, name, description, image } = req.body;
+    const result = await cuisineRepository.createCuisine(id, name, description, image);
 
     if (result) {
       res.status(201).json({

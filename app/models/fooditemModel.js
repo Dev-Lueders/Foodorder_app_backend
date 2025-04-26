@@ -7,11 +7,7 @@ const fooditemSchema = mongoose.Schema({
          unique: true,
 
     },
-    _id: {
-        type: mongoose.Schema.Types.ObjectId,
-        
-
-    },
+ 
     name: {
         type: String,
         required: true,

@@ -1,10 +1,10 @@
-const categoryRepository = require("..//database/repositories/categoryRepository");
+const categoryRepository = require("../database/repositories/categoryRepository");
 const expressAsyncHandler = require("express-async-handler");
 
 const createCategory = expressAsyncHandler(async (req, res) => {
   try {
-    const { name, description, image } = req.body;
-    const result = await categoryRepository.createCategory(name, description, image);
+    const { id, name, description, image } = req.body;
+    const result = await categoryRepository.createCategory(id, name, description, image);
 
     if (result) {
       res.status(201).json({
@@ -76,7 +76,7 @@ const getCategory = expressAsyncHandler(async (req, res) => {
     if (result) {
       res.status(200).json({
         data: result,
-        message: "Sucessfully fetched category details.",
+        message: "Successfully fetched category details.",
       });
     } else {
       res.status(204);

@@ -4,8 +4,8 @@ const expressAsyncHandler = require("express-async-handler");
 const createFooditem = expressAsyncHandler(async (req, res) => {
   /* COMPLETE TASK 1.a HERE */
   try {
-    const { name, description, image, categoryId, cuisineId, isVeg } = req.body;
-    const result = await fooditemRepository.createFooditem(name, description, image, categoryId, cuisineId, isVeg);
+    const { id, name, description, image, categoryId, cuisineId, isVeg, isActive } = req.body;
+    const result = await fooditemRepository.createFooditem(id, name, description, image, categoryId, cuisineId, isVeg, isActive);
 
     if (result) {
       res.status(201).json({
@@ -23,12 +23,18 @@ const createFooditem = expressAsyncHandler(async (req, res) => {
     });
   }
 });
-
 const editFooditem = expressAsyncHandler(async (req, res) => {
-  /* COMPLETE TASK 1.b HERE */
+  console.log("[editFooditem CONTROLLER] -- function entry");
+  console.log(" req.params.id:", req.params.id);
+  console.log(" req.body:", req.body);
+
   try {
     const fooditemId = req.params.id;
+    console.log(" Calling repository.editFooditem with ID:", fooditemId);
+
     const result = await fooditemRepository.editFooditem(fooditemId, req.body);
+
+    console.log(" repository.editFooditem result:", result);
 
     if (result) {
       res.status(200).json({
@@ -39,7 +45,7 @@ const editFooditem = expressAsyncHandler(async (req, res) => {
       throw new Error(`Failed to edit Food Item`);
     }
   } catch (err) {
-    console.error(err);
+    console.error(" Error in CONTROLLER:", err);
     res.status(500).json({
       message: "Failed to edit Food Item details",
       error: err.message,

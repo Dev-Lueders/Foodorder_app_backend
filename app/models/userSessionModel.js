@@ -20,11 +20,11 @@ const userSessionSchema = mongoose.Schema({
     },
     createdTs: {
         type: Date,
-        default: new Date(),
+        default: Date.now,
     },
     updatedTs: {
         type: Date,
-        default: new Date(),
+        default: Date.now,
     }
 });
 

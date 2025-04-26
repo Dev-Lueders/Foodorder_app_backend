@@ -22,7 +22,8 @@ orderTotalPrice: {
     },
 isActive: {
         type: Boolean,
-        default: true,
+    default: true,
+        required: true,
     },
     createdTs: {
         type: Date,

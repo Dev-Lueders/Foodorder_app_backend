@@ -1,6 +1,6 @@
 const CartitemsModel = require("../../models/cartitemsModel");
 
-const createCartitem = async (
+const createCartitems = async (
     id,
     fooditemId,
     fooditemPrice,
@@ -23,7 +23,7 @@ const createCartitem = async (
     }
 };
 
-const editCartitems = async (cartId, newData) => {
+const editCartitems = async (cartitemsId, newData) => {
     try {
         const cartitemsObject = await CartitemsModel.findOne({
             _id: cartitemsId
@@ -35,7 +35,7 @@ const editCartitems = async (cartId, newData) => {
         cartitemsObject.id = newData.id;
         cartitemsObject.fooditemId = newData.fooditemId;
         cartitemsObject.fooditemPrice = newData.fooditemPrice;
-        cartitemsObject.unitsInStock = newData.unitsInStock;
+        cartitemsObject.unitsInCart = newData.unitsInCart;
         cartitemsObject.isActive = newData.isActive;
 
         const updatedCartitems = await cartitemsObject.save();
@@ -60,7 +60,7 @@ const deleteCartitems = async (cartitemsId) => {
 };
 
 
-const getCartitem = async (cartitemsId) => {
+const getCartitems = async (cartitemsId) => {
     try {
         const cartitemsObject = await CartitemsModel.findOne({
             _id: cartitemsId
@@ -84,8 +84,8 @@ const getAllCartitems = async () => {
 
 module.exports = {
     getAllCartitems,
-    getCartitem,
-    createCartitem,
+    getCartitems,
+    createCartitems,
     editCartitems,
     deleteCartitems,
 

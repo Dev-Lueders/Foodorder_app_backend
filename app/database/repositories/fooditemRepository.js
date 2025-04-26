@@ -2,7 +2,7 @@
 
 const FooditemModel = require("../../models/fooditemModel");
 
-const createFooditem = async (id, name, description, image, categoryId, cuisineId, isVeg) => {
+const createFooditem = async (id, name, description, image, categoryId, cuisineId, isVeg,isActive) => {
   try {
     const newFooditem = await FooditemModel.create({
       id: id,

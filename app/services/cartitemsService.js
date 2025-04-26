@@ -3,8 +3,8 @@ const expressAsyncHandler = require("express-async-handler");
 
 const createCartitems = expressAsyncHandler(async (req, res) => {
     try {
-        const { id, fooditemId, fooditemPrice, cartId } = req.body;
-        const result = await cartitemsRepository.createCartitems(id, fooditemId, fooditemPrice, cartId);
+        const { id, fooditemId, fooditemPrice, cartId, userId, isActive } = req.body;
+        const result = await cartitemsRepository.createCartitems(id, fooditemId, fooditemPrice, cartId, userId, isActive);
 
         if (result) {
             res.status(201).json({
@@ -47,7 +47,7 @@ const editCartitems = expressAsyncHandler(async (req, res) => {
 const deleteCartitems = expressAsyncHandler(async (req, res) => {
     try {
         const cartitemsId = req.params.id;
-        const result = await cartitemsREpository.deletCartitems(cartitemsId);
+        const result = await cartitemsRepository.deleteCartitems(cartitemsId);
 
         if (result) {
             res.status(200).json({
@@ -68,7 +68,7 @@ const deleteCartitems = expressAsyncHandler(async (req, res) => {
 
 const getCartitems = expressAsyncHandler(async (req, res) => {
     try {
-        const cartitemsId = req.params.is;
+        const cartitemsId = req.params.id;
         const result = await cartitemsRepository.getCartitems(cartitemsId);
     
         if (result) {
@@ -93,7 +93,7 @@ const getCartitems = expressAsyncHandler(async (req, res) => {
 const getAllCartitems = expressAsyncHandler(async (req, res) => {
     try {
         const result = await cartitemsRepository.getAllCartitems();
-        response.status(200).json({
+        res.status(200).json({
             data: result,
             message: "Successfully fetched all Cart Items",
         });

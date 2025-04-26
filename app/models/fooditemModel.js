@@ -21,11 +21,11 @@ const fooditemSchema = mongoose.Schema({
         required: true,
     },
     categoryId: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
         required: true,
     },
     cuisineId: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
         required: true,
     },
     isVeg: {
@@ -38,11 +38,11 @@ const fooditemSchema = mongoose.Schema({
     },
     createdTs: {
         type: Date,
-        default: new Date(),
+        default: Date.now,
     },
     updatedTs: {
         type: Date,
-        default: new Date(),
+        default:Date.now,
     }
 });
 

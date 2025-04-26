@@ -9,6 +9,9 @@ const modelMap = {
     userId: require("../models/userModel"),
   fooditemId: require("../models/fooditemModel"),
   menuitemId: require("../models/menuitemModel"),
+  shippingId: require("../models/shippingModel"),
+  cartsId: require("../models/cartModel"),
+  cartitemsId: require("../models/cartitemsModel"),
 
   
 };

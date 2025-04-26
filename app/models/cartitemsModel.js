@@ -15,7 +15,7 @@ const cartitemsSchema = mongoose.Schema({
         type: Number,
         required: true,
     },
-    unitsInStock: {
+    unitsInCart: {
         type: Number,
     },
     userId: {

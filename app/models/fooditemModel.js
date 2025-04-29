@@ -1,8 +1,4 @@
 const mongoose = require('mongoose');
-const resolveID  = require("../helpers/resolveID"); // Import resolveID
-const category = require("../models/categoryModel");
-const cuisine = require("../models/cuisineModel");
-
 
 const fooditemSchema = mongoose.Schema({
   id: {
@@ -24,10 +20,12 @@ const fooditemSchema = mongoose.Schema({
   },
   categoryId: {
     type: mongoose.Schema.Types.ObjectId,
+    ref: 'category',
     required: true,
   },
   cuisineId: {
     type: mongoose.Schema.Types.ObjectId,
+    ref: 'cuisine',
     required: true,
   },
   isVeg: {
@@ -48,24 +46,6 @@ const fooditemSchema = mongoose.Schema({
   }
 });
 
-
-fooditemSchema.pre('save', async function(next) {
-  try {
-                                 // Resolve categoryId using the Category model
-    if (this.categoryId && mongoose.Types.ObjectId.isValid(this.categoryId)) {
-      this.categoryId = await resolveID(this.categoryId, category);
-    }
-
-                                 // Resolve cuisineId using the Cuisine model
-    if (this.cuisineId && mongoose.Types.ObjectId.isValid(this.cuisineId)) {
-      this.cuisineId = await resolveID(this.cuisineId, cuisine);
-    }
-
-    next(); 
-  } catch (err) {
-    next(err);  
-  }
-});
 
 const FooditemModel = mongoose.model('Fooditems', fooditemSchema);
 

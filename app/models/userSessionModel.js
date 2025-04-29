@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 const { default: UserModel } = require('./userModel');
 
 const userSessionSchema = mongoose.Schema({
-    // id: {
-    //     type: String,
-    // },
+    id: {
+        type: String,
+    },
     userId: {
-        type: mongoose.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref:"users",
         required: true,
     },

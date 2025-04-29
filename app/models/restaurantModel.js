@@ -27,10 +27,12 @@ const restaurantSchema = mongoose.Schema({
         default: true,
     },
     categoryId: {
-      type: String,  
+        type: mongoose.Schema.Types.ObjectId, 
+      ref:'category'  
     },
     cuisineId: {
-        type:String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'cuisine'
     },
     createdTs: {
         type: Date,

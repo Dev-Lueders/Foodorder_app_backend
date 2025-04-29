@@ -3,9 +3,11 @@ const mongoose = require('mongoose')
 const userSchema = mongoose.Schema(
     
     {
-        // id: {
-        // type: String,
-        // },
+        id: {
+            type: String,
+            required: true,
+            unique: true,
+        },
         username: {
             type: String,
             required: true,
@@ -14,7 +16,7 @@ const userSchema = mongoose.Schema(
             type: String,
             required: true,
         },
-        email: {
+        emailId: {
             type: String,
             required: true,
         },
@@ -23,9 +25,6 @@ const userSchema = mongoose.Schema(
             type: String,
             required: true,
         },
-//   phoneNo: {
-//             type: String,
-//         },
 
         isAdmin: {
             type: Boolean,

@@ -11,7 +11,8 @@ const shippingSchema = mongoose.Schema({
         required: true,
     },
     emailId: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'users',
         required: true,
     },
     phoneNo: {

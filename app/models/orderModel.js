@@ -65,10 +65,11 @@ const ShippingDetailsSchema = mongoose.Schema({
 });
 
 const orderSchema = mongoose.Schema({
-  // id: {
-  //       type: string,
-  //   requires: true,  
-  // },
+  id: {
+    type: String,
+    unique: true,
+    requires: true,  
+  },
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref:"users",
@@ -76,6 +77,7 @@ const orderSchema = mongoose.Schema({
   },
   restaurantId: {
     type: mongoose.Schema.Types.ObjectId,
+    ref:'restaurants',
     required: true,
   },
   status: {
@@ -93,7 +95,7 @@ const orderSchema = mongoose.Schema({
   },
    
     shippingDetails: {
-      type: mongoose.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref:"shippingdetails",
     required: true
   },

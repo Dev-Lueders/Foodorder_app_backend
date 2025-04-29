@@ -60,13 +60,13 @@ const login = expressAsyncHandler(async (req, res) => {
     }
 
     let userSessionObject = await userRepository.findActiveUserSession(
-      user.id
+      user._id
     );
 
     if (!userSessionObject) {
-      const sessionToken = generatingSessionToken(user.id);
+      const sessionToken = generatingSessionToken(user._id);
       userSessionObject = await userRepository.createUserSession({
-        userId: user.id,
+        userId: user._id,
         sessionToken: sessionToken,
       });
     }
@@ -74,7 +74,7 @@ const login = expressAsyncHandler(async (req, res) => {
     res.status(200).json({
       message: "User logged in successfully",
       data: {
-        id: user.id,
+        _id: user._id,
         username: user.username,
         fullname: user.fullname,
         email: user.email,
@@ -96,7 +96,7 @@ const userDetails = expressAsyncHandler(async (req, res) => {
     const userObject = await userRepository.findUserById(req.params.id);
     if (userObject) {
       res.status(200).json({
-        id: userObject.id,
+        _id: userObject._id,
         username: userObject.username,
         fullname: userObject.fullname,
         email: userObject.email,
@@ -118,7 +118,7 @@ const userDetails = expressAsyncHandler(async (req, res) => {
 const logout = expressAsyncHandler(async (req, res) => {
   try {
     const userSessionObject = await userRepository.findActiveUserSession(
-      req.user.id,
+      req.user._id,
       req.headers.authorization.split(" ")[1]
     );
 
@@ -134,7 +134,7 @@ const logout = expressAsyncHandler(async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({
-      message: "Error processing logout request",
+      messsage: "Error processing logout request",
       error: err.message,
     });
   }
@@ -144,26 +144,23 @@ const editUser = expressAsyncHandler(async (req, res) => {
   try {
     const userObject = await userRepository.findUserById(req.params.id);
     if (userObject) {
-      userObject.isActive = req.body.isActive || userObject.isActive;
-      userObject.id = req.body.id || userObject.id;
-      userObject.username = req.body.username || userObject.username;
       userObject.fullname = req.body.fullname || userObject.fullname;
       userObject.isAdmin = req.body.isAdmin || userObject.isAdmin;
       userObject.email = req.body.email || userObject.email;
       userObject.password = req.body.password || userObject.password;
 
       const updatedUser = await userRepository.updateUser(
-        userObject.id,
+        userObject._id,
         userObject
       );
-      if (!updatedUser) throw new Error("Unable to update the user details new Error");
+      if (!updatedUser) throw new Error("Unable to update the user details");
 
       res.status(200).json({
         message: "Details are successfully updated.",
       });
     } else {
       res.status(400);
-      throw new Error("Unable to update the user details stat 400");
+      throw new Error("Unable to update the user details");
     }
   } catch (err) {
     console.error(err);
@@ -180,12 +177,12 @@ const deleteUserHandler = expressAsyncHandler(async (req, res) => {
     if (userObject) {
       userObject.isActive = false;
       const userSessionObject = await userRepository.findActiveUserSession(
-        userObject.id
+        userObject._id
       );
       if (userSessionObject) {
         await userRepository.deactivateUserSession(userSessionObject);
       }
-      await userRepository.updateUser(userObject.id, userObject);
+      await userRepository.updateUser(userObject._id, userObject);
 
       res.status(200).json({
         message: "User deleted successfully",
